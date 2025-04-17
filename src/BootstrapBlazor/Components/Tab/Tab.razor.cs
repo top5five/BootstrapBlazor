@@ -263,6 +263,12 @@ public partial class Tab : IHandlerException
     public string? NextIcon { get; set; }
 
     /// <summary>
+    /// 上下切换时是否循环
+    /// </summary>
+    [Parameter]
+    public bool IsCycle { get; set; } = true;
+
+    /// <summary>
     /// 获得/设置 下拉菜单标签图标
     /// </summary>
     [Parameter]
@@ -650,7 +656,7 @@ public partial class Tab : IHandlerException
                 index--;
                 if (index < 0)
                 {
-                    index = TabItems.Count - 1;
+                    index = IsCycle ? TabItems.Count - 1 : 0;
                 }
 
                 if (!ClickTabToNavigation)
@@ -691,7 +697,7 @@ public partial class Tab : IHandlerException
                 index++;
                 if (index + 1 > TabItems.Count)
                 {
-                    index = 0;
+                    index = IsCycle ? 0 : TabItems.Count - 1;
                 }
 
                 item = TabItems[index];
